@@ -7,40 +7,53 @@ from PIL import Image, ImageTk
 from mutagen.id3 import ID3
 from mutagen.mp3 import MP3
 
+
+#sudo apt-get install vlc, sudo pip install mutagen, sudo pip install python-imaging-tk
+
+
+
+
+root = Tk()
+#sw sh 1366 768
+screen_width = root.winfo_screenwidth()
+screen_height = root.winfo_screenheight()
+
 MUSIC_DIRECTORY = "/home/stephen/Music/"
 
-LABEL_WIDTH=230
-LABEL_HEIGHT=62
-LABEL_X = 290
-LABEL_Y =186
+LABEL_WIDTH=int(screen_width*0.168)
+LABEL_HEIGHT=int(screen_height*0.081)
+LABEL_X = int(screen_width*0.212)
+LABEL_Y =int(screen_height*0.242)
 
-NOW_PLAYING_HEIGHT=4
-NOW_PLAYING_WIDTH=33
-QUEUE_HEIGHT=4
-QUEUE_WIDTH=34
+NOW_PLAYING_HEIGHT=int(screen_height*0.005)
+NOW_PLAYING_WIDTH=int(screen_width*0.024)
+QUEUE_HEIGHT=int(screen_height*0.005)
+QUEUE_WIDTH=int(screen_width*0.025)
 
-NOW_PLAYING_X = 697
-NOW_PLAYING_Y = 627
-QUEUE_X = 379
-QUEUE_Y = 627
+NOW_PLAYING_X = int(screen_width*0.510)
+NOW_PLAYING_Y = int(screen_height*0.816)
+QUEUE_X = int(screen_width*0.277)
+QUEUE_Y = int(screen_height*0.816)
 
-LETTER_X = 155
-LETTER_Y = 647
-ROW_LETTER_X = 190
+LETTER_X = int(screen_width*0.113)
+LETTER_Y = int(screen_height*0.842)
+ROW_LETTER_X = int(screen_width*0.140)
 
-VOL_X=1140
-VOL_Y=651
+VOL_X=int(screen_width*0.835)
+VOL_Y=int(screen_height*0.848)
 
 
 queue = []
 p = vlc.MediaPlayer()
-root = Tk()
+
 curvol = 50
 vlc.MediaPlayer.audio_set_volume(p, curvol)
 
 im = Image.open('pijuke_frontend_2.png')
-screen_width = root.winfo_screenwidth()
-screen_height = root.winfo_screenheight()
+
+
+
+
 fixedim = im.resize((screen_width,screen_height))
 tkimage = ImageTk.PhotoImage(fixedim)
 myvar=Label(root,image = tkimage)
@@ -150,7 +163,7 @@ nowplayinglistbox.place(x=NOW_PLAYING_X, y=NOW_PLAYING_Y)
 vol_font = tkFont.Font(size=25)
 volbox = Listbox(root, height=1, width=3,borderwidth=0, highlightthickness=0, bg='black', fg='white', font=vol_font)
 volbox.place(x=VOL_X, y=VOL_Y)
-volbox.insert(END,100)
+volbox.insert(END,curvol)
 
 button1 = Label(root, text=song_dictionary[current_page][0]["ARTIST"]+"\n\n"+song_dictionary[current_page][0]["SONGNAME"],anchor = N, image = photoimage,font = 'comic 8 bold',  height=LABEL_HEIGHT, width=LABEL_WIDTH,borderwidth=0, highlightthickness=0, compound=CENTER)
 button1.place(x=LABEL_X, y=LABEL_Y)

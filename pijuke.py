@@ -6,7 +6,7 @@ import vlc
 from PIL import Image, ImageTk
 from mutagen.id3 import ID3
 from mutagen.mp3 import MP3
-
+import pygame
 
 #sudo apt-get install vlc, sudo pip install mutagen, sudo pip install python-imaging-tk
 
@@ -168,37 +168,37 @@ volbox.insert(END,curvol)
 button1 = Label(root, text=song_dictionary[current_page][0]["ARTIST"]+"\n\n"+song_dictionary[current_page][0]["SONGNAME"],anchor = N, image = photoimage,font = 'comic 8 bold',  height=LABEL_HEIGHT, width=LABEL_WIDTH,borderwidth=0, highlightthickness=0, compound=CENTER)
 button1.place(x=LABEL_X, y=LABEL_Y)
 button2 = Label(root, text=song_dictionary[current_page][1]["ARTIST"]+"\n\n"+song_dictionary[current_page][1]["SONGNAME"], image = photoimage,font = 'comic 8 bold', relief='flat', height=LABEL_HEIGHT, width=LABEL_WIDTH,borderwidth=0, highlightthickness=0, compound=CENTER)
-button2.place(x=LABEL_X+278, y=LABEL_Y)
+button2.place(x=LABEL_X+int(screen_width*0.204), y=LABEL_Y)
 button3 = Label(root, text=song_dictionary[current_page][2]["ARTIST"]+"\n\n"+song_dictionary[current_page][2]["SONGNAME"], image = photoimage,font = 'comic 8 bold', relief='groove', height=LABEL_HEIGHT, width=LABEL_WIDTH,borderwidth=0, highlightthickness=0, compound=CENTER)
-button3.place(x=LABEL_X+554, y=LABEL_Y)
+button3.place(x=LABEL_X+int(screen_width*0.406), y=LABEL_Y)
 
 button4 = Label(root, text=song_dictionary[current_page][3]["ARTIST"]+"\n\n"+song_dictionary[current_page][3]["SONGNAME"], image = photoimage,font = 'comic 8 bold', relief='groove', height=LABEL_HEIGHT, width=LABEL_WIDTH,borderwidth=0, highlightthickness=0, compound=CENTER)
 button4.place(x=LABEL_X, y=LABEL_Y+LABEL_HEIGHT)
 button5 = Label(root, text=song_dictionary[current_page][4]["ARTIST"]+"\n\n"+song_dictionary[current_page][4]["SONGNAME"], image = photoimage,font = 'comic 8 bold',  relief='groove', height=LABEL_HEIGHT, width=LABEL_WIDTH,borderwidth=0, highlightthickness=0, compound=CENTER)
-button5.place(x=LABEL_X+278, y=LABEL_Y+LABEL_HEIGHT)
+button5.place(x=LABEL_X+int(screen_width*0.204), y=LABEL_Y+LABEL_HEIGHT)
 button6 = Label(root, text=song_dictionary[current_page][5]["ARTIST"]+"\n\n"+song_dictionary[current_page][5]["SONGNAME"], image = photoimage,font = 'comic 8 bold', relief='groove', height=LABEL_HEIGHT, width=LABEL_WIDTH,borderwidth=0, highlightthickness=0, compound=CENTER)
-button6.place(x=LABEL_X+554, y=LABEL_Y+LABEL_HEIGHT)
+button6.place(x=LABEL_X+int(screen_width*0.406), y=LABEL_Y+LABEL_HEIGHT)
 
 button7 = Label(root, text=song_dictionary[current_page][6]["ARTIST"]+"\n\n"+song_dictionary[current_page][6]["SONGNAME"], image = photoimage,font = 'comic 8 bold',  relief='groove', height=LABEL_HEIGHT, width=LABEL_WIDTH,borderwidth=0, highlightthickness=0, compound=CENTER)
 button7.place(x=LABEL_X, y=LABEL_Y+(LABEL_HEIGHT*2))
 button8 = Label(root, text=song_dictionary[current_page][7]["ARTIST"]+"\n\n"+song_dictionary[current_page][7]["SONGNAME"], image = photoimage,font = 'comic 8 bold',  relief='groove', height=LABEL_HEIGHT, width=LABEL_WIDTH,borderwidth=0, highlightthickness=0, compound=CENTER)
-button8.place(x=LABEL_X+278, y=LABEL_Y+(LABEL_HEIGHT*2))
+button8.place(x=LABEL_X+int(screen_width*0.204), y=LABEL_Y+(LABEL_HEIGHT*2))
 button9 = Label(root, text=song_dictionary[current_page][8]["ARTIST"]+"\n\n"+song_dictionary[current_page][8]["SONGNAME"], image = photoimage,font = 'comic 8 bold',  relief='groove', height=LABEL_HEIGHT, width=LABEL_WIDTH,borderwidth=0, highlightthickness=0, compound=CENTER)
-button9.place(x=LABEL_X+554, y=LABEL_Y+(LABEL_HEIGHT*2))
+button9.place(x=LABEL_X+int(screen_width*0.406), y=LABEL_Y+(LABEL_HEIGHT*2))
 
 button10 = Label(root, text=song_dictionary[current_page][9]["ARTIST"]+"\n\n"+song_dictionary[current_page][9]["SONGNAME"],image = photoimage,font = 'comic 8 bold',  relief='groove', height=LABEL_HEIGHT, width=LABEL_WIDTH,borderwidth=0, highlightthickness=0, compound=CENTER)
 button10.place(x=LABEL_X, y=LABEL_Y+(LABEL_HEIGHT*3))
 button11 = Label(root, text=song_dictionary[current_page][10]["ARTIST"]+"\n\n"+song_dictionary[current_page][10]["SONGNAME"],image = photoimage,font = 'comic 8 bold',  relief='groove', height=LABEL_HEIGHT, width=LABEL_WIDTH,borderwidth=0, highlightthickness=0, compound=CENTER)
-button11.place(x=LABEL_X+278, y=LABEL_Y+(LABEL_HEIGHT*3))
+button11.place(x=LABEL_X+int(screen_width*0.204), y=LABEL_Y+(LABEL_HEIGHT*3))
 button12 = Label(root, text=song_dictionary[current_page][11]["ARTIST"]+"\n\n"+song_dictionary[current_page][11]["SONGNAME"], image = photoimage,font = 'comic 8 bold',  relief='groove', height=LABEL_HEIGHT, width=LABEL_WIDTH,borderwidth=0, highlightthickness=0, compound=CENTER)
-button12.place(x=LABEL_X+554, y=LABEL_Y+(LABEL_HEIGHT*3))
+button12.place(x=LABEL_X+int(screen_width*0.406), y=LABEL_Y+(LABEL_HEIGHT*3))
 
 button13 = Label(root, text=song_dictionary[current_page][12]["ARTIST"]+"\n\n"+song_dictionary[current_page][12]["SONGNAME"],image = photoimage,font = 'comic 8 bold', relief='groove', height=LABEL_HEIGHT, width=LABEL_WIDTH,borderwidth=0, highlightthickness=0, compound=CENTER)
 button13.place(x=LABEL_X, y=LABEL_Y+(LABEL_HEIGHT*4))
 button14 = Label(root, text=song_dictionary[current_page][13]["ARTIST"]+"\n\n"+song_dictionary[current_page][13]["SONGNAME"],image = photoimage,font = 'comic 8 bold',  relief='groove', height=LABEL_HEIGHT, width=LABEL_WIDTH,borderwidth=0, highlightthickness=0, compound=CENTER)
-button14.place(x=LABEL_X+278, y=LABEL_Y+(LABEL_HEIGHT*4))
+button14.place(x=LABEL_X+int(screen_width*0.204), y=LABEL_Y+(LABEL_HEIGHT*4))
 button15 = Label(root, text=song_dictionary[current_page][14]["ARTIST"]+"\n\n"+song_dictionary[current_page][14]["SONGNAME"], image = photoimage,font = 'comic 8 bold', relief='groove', height=LABEL_HEIGHT, width=LABEL_WIDTH,borderwidth=0, highlightthickness=0, compound=CENTER)
-button15.place(x=LABEL_X+554, y=LABEL_Y+(LABEL_HEIGHT*4))
+button15.place(x=LABEL_X+int(screen_width*0.406), y=LABEL_Y+(LABEL_HEIGHT*4))
 
 
 # Changes the songs/artists being displayed
@@ -336,6 +336,14 @@ def manage_queue():
     global queue
     global skipvar
     global p
+    for event in pygame.event.get(): # User did something        
+        # Possible joystick actions: JOYAXISMOTION JOYBALLMOTION JOYBUTTONDOWN JOYBUTTONUP JOYHATMOTION
+        if event.type == pygame.JOYBUTTONDOWN:
+            vol_changer("up", event=None)
+        if event.type == pygame.JOYBUTTONUP:
+            vol_changer("down", event=None)
+
+    
     if skipvar == False:
         state = str(p.get_state())
         if state == "State.Ended" or state == "State.Stopped":

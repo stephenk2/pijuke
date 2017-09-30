@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import sys
 import glob
 from Tkinter import *
@@ -7,18 +9,19 @@ from PIL import Image, ImageTk
 from mutagen.id3 import ID3
 from mutagen.mp3 import MP3
 import pygame
+import os
 
 #sudo apt-get install vlc, sudo pip install mutagen, sudo pip install python-imaging-tk
-
-
-
+pygame.init()
+my_joystick = pygame.joystick.Joystick(0)
+my_joystick.init()
 
 root = Tk()
 #sw sh 1366 768
 screen_width = root.winfo_screenwidth()
 screen_height = root.winfo_screenheight()
 
-MUSIC_DIRECTORY = "/home/stephen/Music/"
+MUSIC_DIRECTORY = "/home/pi/RetroPie/roms/jukebox/"
 
 LABEL_WIDTH=int(screen_width*0.168)
 LABEL_HEIGHT=int(screen_height*0.081)
@@ -49,7 +52,7 @@ p = vlc.MediaPlayer()
 curvol = 50
 vlc.MediaPlayer.audio_set_volume(p, curvol)
 
-im = Image.open('pijuke_frontend_2.png')
+im = Image.open('/home/pi/pijuke-master/pijuke_frontend_2.png')
 
 
 
@@ -61,7 +64,10 @@ myvar.place(x=0, y=0, relwidth=1, relheight=1)
 
 root.attributes('-fullscreen', True)
 font = 'comic 22 bold'
-song_dictionary = {0:{0:'',1:'',2:'',3:'',4:'',5:'',6:'',7:'',8:'',9:'',10:'',11:'',12:'',13:'',14:''}}
+song_dictionary = {0:{0:{"ARTIST":"","SONGNAME":""},1:{"ARTIST":"","SONGNAME":""},2:{"ARTIST":"","SONGNAME":""},3:{"ARTIST":"","SONGNAME":""},
+                      4:{"ARTIST":"","SONGNAME":""},5:{"ARTIST":"","SONGNAME":""},6:{"ARTIST":"","SONGNAME":""},7:{"ARTIST":"","SONGNAME":""}
+                     ,8:{"ARTIST":"","SONGNAME":""},9:{"ARTIST":"","SONGNAME":""},10:{"ARTIST":"","SONGNAME":""},11:{"ARTIST":"","SONGNAME":""},
+                     12:{"ARTIST":"","SONGNAME":""},13:{"ARTIST":"","SONGNAME":""},14:{"ARTIST":"","SONGNAME":""}}}
 my_music =  glob.glob("{}*.mp3".format(MUSIC_DIRECTORY))
 
 skipvar= False
@@ -108,7 +114,7 @@ def comp_s(index, songname):
     state = str(p.get_state())
   
     if state != "State.Playing":
-        p = vlc.MediaPlayer('record_play.wav')
+        p = vlc.MediaPlayer('/home/pi/pijuke-master/record_play.wav')
         p.play()
         root.after(3500, fakefunction())
         p = vlc.MediaPlayer(song_dictionary[index][songname]["SONGPATH"])
@@ -128,7 +134,7 @@ def change_page(direction):
     state = str(p.get_state())
     if direction == "right":
         if state != "State.Playing":
-            x = vlc.MediaPlayer('fast_change_page.wav')
+            x = vlc.MediaPlayer('/home/pi/pijuke-master/fast_change_page.wav')
             x.play()
             root.after(1050, fakefunction())
         else:
@@ -139,7 +145,7 @@ def change_page(direction):
             current_page += 1
     elif direction == "left":
         if state != "State.Playing":
-            x = vlc.MediaPlayer('fast_change_page.wav')
+            x = vlc.MediaPlayer('/home/pi/pijuke-master/fast_change_page.wav')
             x.play()
             root.after(1050, fakefunction())
         else:
@@ -151,7 +157,7 @@ def change_page(direction):
     update_buttons()
 
 
-photoimage1 = Image.open("black_white_label.png").resize((LABEL_WIDTH, LABEL_HEIGHT)) 
+photoimage1 = Image.open("/home/pi/pijuke-master/black_white_label.png").resize((LABEL_WIDTH, LABEL_HEIGHT)) 
 photoimage = ImageTk.PhotoImage(photoimage1)  
 
 listbox = Listbox(root, height=QUEUE_HEIGHT, width=QUEUE_WIDTH,borderwidth=0, highlightthickness=0, bg='black', fg='white')
@@ -165,6 +171,8 @@ volbox = Listbox(root, height=1, width=3,borderwidth=0, highlightthickness=0, bg
 volbox.place(x=VOL_X, y=VOL_Y)
 volbox.insert(END,curvol)
 
+
+print song_dictionary
 button1 = Label(root, text=song_dictionary[current_page][0]["ARTIST"]+"\n\n"+song_dictionary[current_page][0]["SONGNAME"],anchor = N, image = photoimage,font = 'comic 8 bold',  height=LABEL_HEIGHT, width=LABEL_WIDTH,borderwidth=0, highlightthickness=0, compound=CENTER)
 button1.place(x=LABEL_X, y=LABEL_Y)
 button2 = Label(root, text=song_dictionary[current_page][1]["ARTIST"]+"\n\n"+song_dictionary[current_page][1]["SONGNAME"], image = photoimage,font = 'comic 8 bold', relief='flat', height=LABEL_HEIGHT, width=LABEL_WIDTH,borderwidth=0, highlightthickness=0, compound=CENTER)
@@ -285,7 +293,7 @@ def pick_song(index):
     global p
     state = str(p.get_state)
     if state != "State.Playing":
-        x = vlc.MediaPlayer('button_press.wav')
+        x = vlc.MediaPlayer('/home/pi/pijuke-master/button_press.wav')
         x.play()
 
     if index == "delete":
@@ -333,16 +341,56 @@ root.bind("<Right>", (lambda event: change_page('right')))
 
 #This is called continuously, if it detects a song has ended and the queue is not empty it will start playing the next song
 def manage_queue():
+    print "manage queue called"
     global queue
     global skipvar
     global p
-    for event in pygame.event.get(): # User did something        
-        # Possible joystick actions: JOYAXISMOTION JOYBALLMOTION JOYBUTTONDOWN JOYBUTTONUP JOYHATMOTION
-        if event.type == pygame.JOYBUTTONDOWN:
-            vol_changer("up", event=None)
-        if event.type == pygame.JOYBUTTONUP:
-            vol_changer("down", event=None)
+    #print "event queue", pygame.event.get()
+    event_list = pygame.event.get()
+    print "event list", event_list
+    for event_name in event_list:
+        print "EVENt", event_name.type
 
+        # if event_name.type is 10, a button has been pressed
+        if event_name.type == 10:
+            print event_name.button
+            if event_name.button == 0:
+                change_page('left')
+            if event_name.button == 1:
+                vol_changer("up", event=None)
+            if event_name.button == 2:
+                vol_changer("down", event=None)
+            if event_name.button == 3:
+                change_page('right')
+            if event_name.button == 5:
+                pick_song("B")
+            if event_name.button == 6:
+                pick_song("C")
+            if event_name.button == 4:
+                pick_song("E")
+            if event_name.button == 7:
+                pick_song("F")
+            if event_name.button == 8:
+                skip()
+            if event_name.button == 9:
+                pause()
+        if event_name.type == 7:
+            print "JOYSTICK PUSHED ", event_name.value
+            if event_name.value == 1.0:
+                print "calling son"
+                pick_song("A")
+            elif event_name.value <= -0.5:
+                pick_song("D")
+            else:
+                print "Failure", event_name.value
+
+    
+        #if event_name.type == pygame.JOYBUTTONUP:
+        #    print "up pressed"
+        #    vol_changer("up", event=None)
+        #elif event_name.type == pygame.JOYBUTTONDOWN:
+        #    print "down pressed"
+        #    vol_changer("down", event=None)
     
     if skipvar == False:
         state = str(p.get_state())

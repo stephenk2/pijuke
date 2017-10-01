@@ -10,6 +10,7 @@ from mutagen.id3 import ID3
 from mutagen.mp3 import MP3
 import pygame
 import os
+import subprocess
 
 #sudo apt-get install vlc, sudo pip install mutagen, sudo pip install python-imaging-tk
 pygame.init()
@@ -326,6 +327,7 @@ def pick_song(index):
 
 # Used to exit the frontend
 def quit_gui():
+    subprocess.call("killall xinit",shell=True)
     sys.exit()  
 
 

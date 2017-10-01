@@ -99,7 +99,10 @@ for song in my_music:
 
     if songs_on_page == 15:
         pagenum += 1
-        song_dictionary[pagenum] = {0:'',1:'',2:'',3:'',4:'',5:'',6:'',7:'',8:'',9:'',10:'',11:'',12:'',13:'',14:''}
+        song_dictionary[pagenum] = {0:{"ARTIST":"","SONGNAME":""},1:{"ARTIST":"","SONGNAME":""},2:{"ARTIST":"","SONGNAME":""},3:{"ARTIST":"","SONGNAME":""},
+                      4:{"ARTIST":"","SONGNAME":""},5:{"ARTIST":"","SONGNAME":""},6:{"ARTIST":"","SONGNAME":""},7:{"ARTIST":"","SONGNAME":""}
+                     ,8:{"ARTIST":"","SONGNAME":""},9:{"ARTIST":"","SONGNAME":""},10:{"ARTIST":"","SONGNAME":""},11:{"ARTIST":"","SONGNAME":""},
+                     12:{"ARTIST":"","SONGNAME":""},13:{"ARTIST":"","SONGNAME":""},14:{"ARTIST":"","SONGNAME":""}}
         songs_on_page = 0
     songs_on_page += 1
     song_dictionary[pagenum][songs_on_page-1] = {"SONGPATH":song, "SONGNAME":title,"ARTIST": author, "LENGTH": time}
@@ -258,11 +261,13 @@ def skip():
 # Sets the paused variable to the opposite of its current setting       
 def pause(event=None):
     global paused
+    global p    
     if paused == True:
         paused= False
+        p.play()
     else:
         paused = True
-        
+        p.pause()
 
 # Create 'buttons' for each of the controls        
 rightbutton = Button(root, text='right', command=lambda: change_page('right'), relief='groove')

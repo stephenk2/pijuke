@@ -22,7 +22,7 @@ root = Tk()
 screen_width = root.winfo_screenwidth()
 screen_height = root.winfo_screenheight()
 
-MUSIC_DIRECTORY = "/home/pi/RetroPie/roms/jukebox/"
+MUSIC_DIRECTORY = "/media/usb/music/"
 
 LABEL_WIDTH=int(screen_width*0.168)
 LABEL_HEIGHT=int(screen_height*0.081)
